@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+// import "user/proto/user.proto";
+
+package operations;
+
+option go_package = "./proto";
+
+// OperationService
+// Handles long-running operations with background processing.
+// Supports operation lifecycle management and status tracking.
+service OperationService {
+  // StartOperation
+  // Queues a new operation for background processing.
+  // Returns operation ID for status tracking.
+  //
+  // Returns:
+  //   - StartOperationResponse with operation ID
+  //
+  // Errors:
+  //   - INTERNAL: Failed to queue operation
+  rpc StartOperation(StartOperationRequest) returns (StartOperationResponse) {}
+
+  // CheckProcess
+  // Retrieves current status of a long-running operation.
+  // Used to track progress and completion.
+  //
+  // Returns:
+  //   - CheckProcessResponse with current operation state
+  //
+  // Errors:
+  //   - NOT_FOUND: Operation ID does not exist
+  //   - INTERNAL: Failed to retrieve operation status
+  rpc CheckProcess(CheckProcessRequest) returns (CheckProcessResponse) {}
+}
+
+// StartOperationRequest
+// Contains data needed to start a new operation.
+message StartOperationRequest {
+  // operation_data
+  // Custom data for the operation processing.
+  // Will be stored and used during step execution.
+  OperationData operation_data = 1;
+}
+
+message OperationData {
+  // Emtpty for now.
+}
+
+// StartOperationResponse
+// Contains the operation ID for status tracking.
+message StartOperationResponse {
+  // operation_id
+  // Unique identifier for the started operation.
+  // Used to check status and retrieve results.
+  string operation_id = 1;
+}
+
+// CheckProcessRequest
+// Used to query operation status by ID.
+message CheckProcessRequest {
+  // operation_id
+  // The operation ID to check status for.
+  string operation_id = 1;
+}
+
+// CheckProcessResponse
+// Contains current operation state and progress.
+message CheckProcessResponse {
+  // operation_id
+  // The operation ID that was queried.
+  string operation_id = 1;
+  
+  // current_step
+  // Current step number being executed (0-based).
+  int32 current_step = 2;
+  
+  // total_steps
+  // Total number of steps in the operation.
+  int32 total_steps = 3;
+  
+  // state
+  // Current state of the operation.
+  // TODO(HI): Change to Enum
+  string state = 4;
+  
+  // completed
+  // Whether the operation has finished (success or failure).
+  bool completed = 5;
+}

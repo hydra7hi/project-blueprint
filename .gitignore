@@ -1,0 +1,32 @@
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Docker compose overrides
+docker-compose.override.yml
+
+# Local environment files
+.env
+.env.local
+!.env.example
+
+# Service binaries
+**/grpc-*-service
+
+# Test data and temporary files
+/testdata/
+/tmp/
+/trash/
+**/coverage.html
+**/coverage.out
+
+# Protobuf generated files
+**.sum
+*.pb.go
+*_grpc.pb.go
