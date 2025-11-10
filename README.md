@@ -20,7 +20,7 @@ Rather to serves as an example of one of the ways a go project might be build.
 
 As I proceed with the implementation to make the code more robust. I plan to include more components, that I have identified in [future improvements](#future-improvements) paragraph. That can be found at the end of the document.
 
-## Contents
+# Contents
 
 1. [Prerequisites](#prerequisites).
 1. [Quick Start](#quick-start).
@@ -32,7 +32,7 @@ As I proceed with the implementation to make the code more robust. I plan to inc
 1. [Demo](#demo).
 1. [Future improvements](#future-improvements).
 
-## Prerequisites
+# Prerequisites
 - Go 1.19+:
 https://go.dev/doc/install
 - PostgreSQL:
@@ -44,7 +44,7 @@ https://protobuf.dev/installation/
 - Make:
 https://www.gnu.org/software/make/#download
 
-## Quick Start
+# Quick Start
 To quickly explore the project, you only need to build and run the docker compose image.
 
 This can be achieved by running the following in `./services/`:
@@ -93,7 +93,7 @@ The test scripts expect the service to be up and running at the default port.
 3. Integrations tests: Automated test to test a service and db.
 4. System tests: Automated test to test all services working together.
 
-## Architecture
+# Architecture
 The project follows the following Architecture. It was mainly constructed with the aim of easy extendability in mind.
 ```
 services/          # All Golang Services
@@ -108,7 +108,7 @@ services/          # All Golang Services
 └── Makefile.service    # Common Build/test commands for each service
 ```
 
-## Make Commands
+# Make Commands
 The project is equipped with basic Make commands, that helps building, running and maintaining the code.
 
 Each Directory will have different make commands.
@@ -165,9 +165,9 @@ make up
 make logs
 ```
 
-2. Build a service.
+2. Build all services.
 ```bash
-cd ./services/user/
+cd ./services/
 make all
 ```
 
