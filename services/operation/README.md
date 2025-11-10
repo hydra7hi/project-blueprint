@@ -1,7 +1,9 @@
 # Operation Service
+Work in Progress..
+
 A Go gRPC service that allows starting a long running operation in the background, and check on the status of it later.
 
-Currently it include an example usecase to queue a job that Creates Users in user service.
+Currently it include an example flow to queue a job that Creates Users in user service.
 
 The service is still a work in progress
 
@@ -9,7 +11,7 @@ The service is still a work in progress
 - Start, check, and cancel long-running operations
 - Get operation results when they're done
 - Background job management
-- Postgress integration for storing operations
+- Postgresql integration for storing operations
 - Environment variable configuration
 
 # API:

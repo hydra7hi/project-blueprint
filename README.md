@@ -1,7 +1,7 @@
 # Intro
-The following project was created as a show case for golang code, for my job application as a golang developer.
+The following project was created as a show case for golang code.
 
-I wanted to include some of the basic components that I thought would be useful for any Go project. Such as:
+With no specific requirements, I aimed to include some of the basic components that I thought would be useful for any Go project. Such as:
 - Golang.
 - Docker.
 - Make.
@@ -15,10 +15,10 @@ I wanted to include some of the basic components that I thought would be useful 
 - ...
 
 
-As I had limited time to build this project from scratch, the code is not perfect in the way I would usually have it in, and is definitely not production ready.
-Rather to serves as an example of one of the ways a go project might be build.
+Using the limited time to build this project from scratch. The code is not in a production ready state,
+but rather to serves as an example for one of the ways a Go project might be build.
 
-As I proceed with the implementation to make the code more robust. I plan to include more components, that I have identified in [future improvements](#future-improvements) paragraph. That can be found at the end of the document.
+As I proceed to expand the implementation to make the code more robust. I plan to include more components, that I have identified in [future improvements](#future-improvements) paragraph. That can be found at the end of the document.
 
 # Contents
 
@@ -201,10 +201,10 @@ make test-system
 
 # Future improvements
 - Handle configurations properly.
-- Create CI/CD Pipeline script.
+- Create CI/CD Pipeline scripts. (Github actions / Jenkinss?? , Terraform, K8s, ArgoCD? )
   - Enforce code quality checks before being able to commit the code. (fmt and lint)
   - Add stages for build, test and deploy.
-- Logging:
+- Logging: (Helm Charts, OpenTelemetry, Grafana, and consider DataDog if free)
   - Have a logger interface.
   - Add proper monitoring solution.
 - Auth.
@@ -217,3 +217,7 @@ make test-system
 - User.
   - Move DB client to common place.
   - Add seeding scripts.
+- Testing the Debugging (Skaffold)
+- Add Client Interceptors.
+- HTTPS Gateway.
+- Frontend (Flutter? React?)

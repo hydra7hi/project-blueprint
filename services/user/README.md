@@ -9,7 +9,7 @@ A Go gRPC service that performs basic CRUD operations on a PostgreSQL User datab
 
 # API:
 The service provide CRUD operations on the user DB,
-with vaidation for request
+with validation for request
 
 For more details check:
 - [Proto](./proto/user.proto) For usage.
