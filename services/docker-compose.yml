@@ -4,6 +4,8 @@ x-service-template: &service_template
     dockerfile: Dockerfile
     args:
       SERVICE: ${SERVICE}
+  env_file:
+    - .env.example
   environment:
     DB_HOST: ${SERVICE}-db
     DB_PORT: 5432
@@ -20,6 +22,8 @@ services:
   user-db:
     image: postgres:13-alpine
     container_name: user-db
+    env_file:
+      - .env.example
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -54,9 +58,12 @@ services:
       timeout: 2s
       retries: 10
       start_period: 5s
+
   operation-db:
     image: postgres:13-alpine
     container_name: operation-db
+    env_file:
+      - .env.example
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -80,6 +87,8 @@ services:
       dockerfile: Dockerfile
       target: operation-service
     container_name: operation-service
+    env_file:
+      - .env.example
     ports:
       - "50052:50051"
     depends_on:

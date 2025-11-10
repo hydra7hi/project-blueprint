@@ -72,10 +72,10 @@ The example provides 2 basic services each with its own Database:
 A basic user management example with CRUD operations. [User README.md](./services/user/README.md)
 
 - Operation service: 
-A basic service for queuing LRO jobs. [Operation README.md](./operation/README.md)
+A basic service for queuing LRO jobs. [Operation README.md](./services/operation/README.md)
 
 # Databases
-Each of the previosly mentioned servcies comes with a postgress database. More details about it in each services Readme.
+Each of the previously mentioned services comes with a postgresql database. More details about it in each services Readme.
 
 # Tests
 The project contains multiple tests in 4 categories:

@@ -15,20 +15,16 @@ import (
 // Preforms the logic behind and rpc.
 // Assumes all given values are validated before calling the function.
 //
-// Returns:
-//   - Proper response.
-//
-// For simplicity, the code is done in a way that
-//
-// (Note: A real implemention would split further split the errors into:
-// internal, Unavailable, NotFound based on db error type)
+// (Note: A real implementation would split the errors into: internal, Unavailable, NotFound based on error type)
+// TODO(HI): Proper error codes in the response.
 
 // createUser
 //
+// Returns:
+//   - User: The Created User.
+//
 // Errors:
 //   - Internal: When failing to create user in DB.
-//
-// (Note: A real implemention would split the errors into: internal, Unavailable, NotFound based on error type)
 func (s *Server) createUser(ctx context.Context, req *pb.CreateUserRequest) (*pb.UserResponse, error) {
 	user, err := s.DB.CreateUser(ctx, req.GetName(), req.GetEmail(), req.GetAge())
 	if err != nil {
@@ -39,10 +35,11 @@ func (s *Server) createUser(ctx context.Context, req *pb.CreateUserRequest) (*pb
 
 // getUser
 //
+// Returns:
+//   - User: The User.
+//
 // Errors:
 //   - NotFound: When failing to find user in DB.
-//
-// (Note: A real implemention would split the errors into: internal, Unavailable, NotFound based on error type)
 func (s *Server) getUser(ctx context.Context, req *pb.GetUserRequest) (*pb.UserResponse, error) {
 	id, err := parseID(req.GetId())
 	if err != nil {
@@ -58,10 +55,11 @@ func (s *Server) getUser(ctx context.Context, req *pb.GetUserRequest) (*pb.UserR
 
 // updateUser
 //
+// Returns:
+//   - User: The Updated User.
+//
 // Errors:
 //   - NotFound: When failing to find user in DB.
-//
-// (Note: A real implemention would split the errors into: internal, Unavailable, NotFound based on error type)
 func (s *Server) updateUser(ctx context.Context, req *pb.UpdateUserRequest) (*pb.UserResponse, error) {
 	id, err := parseID(req.GetId())
 	if err != nil {
@@ -77,10 +75,11 @@ func (s *Server) updateUser(ctx context.Context, req *pb.UpdateUserRequest) (*pb
 
 // deleteUser
 //
+// Returns:
+//   - Success: The result of deleting the User.
+//
 // Errors:
 //   - NotFound: When failing to find user in DB.
-//
-// (Note: A real implemention would split the errors into: internal, Unavailable, NotFound based on error type)
 func (s *Server) deleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
 	id, err := parseID(req.GetId())
 	if err != nil {
@@ -99,10 +98,14 @@ func (s *Server) deleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*pb
 // Limits page size to 100
 // defaults (page, limit) to: (1, 10) if missing.
 //
+// Returns:
+//   - Users: List of requested users.
+//   - Total: Total users count.
+//   - Page: Number of the page.
+//   - Limit: page limit.
+//
 // Errors:
 //   - Internal: When failing to find user in DB.
-//
-// (Note: A real implemention would split the errors into: internal, Unavailable, NotFound based on error type)
 func (s *Server) listUsers(ctx context.Context, req *pb.ListUsersRequest) (*pb.ListUsersResponse, error) {
 	page := int(req.GetPage())
 	if page < 1 {

@@ -22,10 +22,6 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 # Copy the fixed binary from the builder stage
 COPY --from=builder /app/user/grpc-user-service .
-COPY --from=builder /app/.env.example ./.env
-COPY --from=builder /app/set-env.sh ./set-env.sh
-RUN chmod +x ./set-env.sh
-RUN sh ./set-env.sh
 EXPOSE 50051
 CMD ["sh", "-c", "./grpc-user-service"]
 
@@ -36,7 +32,5 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 # Copy the fixed binary from the builder stage
 COPY --from=builder /app/operation/grpc-operation-service .
-COPY --from=builder /app/.env.example ./.env
-COPY --from=builder /app/set-env.sh ./set-env.sh
 EXPOSE 50051 
 CMD ["sh", "-c", "./grpc-operation-service"]

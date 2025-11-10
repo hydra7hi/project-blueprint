@@ -9,7 +9,7 @@ import (
 // Server
 // A struct that hold all needed values for the service during its life time.
 // DB clients, and Clients of internal or external services can be added here.
-// Storing Configs is usually optiona.
+// Storing Configs is usually optional.
 type Server struct {
 	pb.UnimplementedUserServiceServer
 	Config *config.Config
