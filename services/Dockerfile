@@ -8,10 +8,7 @@ COPY . ./
 # Build dependencies (runs once for all services)
 RUN apk add --no-cache protoc make
 RUN make clean
-RUN make build-deps
-RUN make proto
-RUN make build
-
+RUN make all
 # *** 1. BUILD BOTH SERVICES HERE ***
 # Build user-service
 # RUN go build -o /app/grpc-user-service ./user/main.go
@@ -25,6 +22,10 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 # Copy the fixed binary from the builder stage
 COPY --from=builder /app/user/grpc-user-service .
+COPY --from=builder /app/.env.example ./.env
+COPY --from=builder /app/set-env.sh ./set-env.sh
+RUN chmod +x ./set-env.sh
+RUN sh ./set-env.sh
 EXPOSE 50051
 CMD ["sh", "-c", "./grpc-user-service"]
 
@@ -35,5 +36,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 # Copy the fixed binary from the builder stage
 COPY --from=builder /app/operation/grpc-operation-service .
+COPY --from=builder /app/.env.example ./.env
+COPY --from=builder /app/set-env.sh ./set-env.sh
 EXPOSE 50051 
 CMD ["sh", "-c", "./grpc-operation-service"]
