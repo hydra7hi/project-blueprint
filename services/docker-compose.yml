@@ -2,93 +2,74 @@ x-service-template: &service_template
   build:
     context: .
     dockerfile: Dockerfile
+    target: ${SERVICE}-service
     args:
       SERVICE: ${SERVICE}
   env_file:
-    - .env.example
+    - ./.env.example
   environment:
     DB_HOST: ${SERVICE}-db
-    DB_PORT: 5432
-    DB_USER: ${DB_USER}
-    DB_PASSWORD: ${DB_PASSWORD}
-    DB_NAME: ${DB_NAME}
-    GRPC_PORT: ${GRPC_PORT}
   depends_on:
     - ${SERVICE}-db
+  healthcheck:
+    test: ["CMD-SHELL", "nc -z localhost 50051"]
+    interval: 5s
+    timeout: 2s
+    retries: 10
+    start_period: 5s
   networks:
     - app-network
 
+x-db-template: &db_template
+  image: postgres:13-alpine
+  env_file:
+    - .env.example
+  # volumes:
+  # ## TODO(HI): make interchangeable
+  #   - "${SERVICE}_data:/var/lib/postgresql/data"
+  networks:
+    - app-network
+  healthcheck:
+    test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
+    interval: 10s
+    timeout: 5s
+    retries: 5
+
+##### USER
+# DB
 services:
   user-db:
-    image: postgres:13-alpine
+    <<: *db_template
     container_name: user-db
-    env_file:
-      - .env.example
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "5433:5432"
     volumes:
       - user_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    ports:
+      - "5433:5432"
 
+# Service
   user-service:
     <<: *service_template
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: user-service
     container_name: user-service
     ports:
       - "50051:50051"
     depends_on:
       user-db:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 50051"]
-      interval: 5s
-      timeout: 2s
-      retries: 10
-      start_period: 5s
 
+##### OPERATION
+# DB
   operation-db:
-    image: postgres:13-alpine
+    <<: *db_template
     container_name: operation-db
-    env_file:
-      - .env.example
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    ports:
-      - "5434:5432"
     volumes:
       - operation_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    ports:
+      - "5434:5432"
 
+# Service
   operation-service:
     <<: *service_template
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: operation-service
     container_name: operation-service
-    env_file:
-      - .env.example
     ports:
       - "50052:50051"
     depends_on:
@@ -96,12 +77,6 @@ services:
         condition: service_healthy
       user-service:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD-SHELL", "nc -z localhost 50051"]
-      interval: 5s
-      timeout: 2s
-      retries: 10
-      start_period: 5s
 
 volumes:
   user_data:

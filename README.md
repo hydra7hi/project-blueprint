@@ -1,4 +1,4 @@
-# Intro:
+# Intro
 The following project was created as a show case for golang code, for my job application as a golang developer.
 
 I wanted to include some of the basic components that I thought would be useful for any Go project. Such as:
@@ -20,7 +20,7 @@ Rather to serves as an example of one of the ways a go project might be build.
 
 As I proceed with the implementation to make the code more robust. I plan to include more components, that I have identified in [future improvements](#future-improvements) paragraph. That can be found at the end of the document.
 
-## Contents:
+## Contents
 
 1. [Prerequisites](#prerequisites).
 1. [Quick Start](#quick-start).
@@ -44,7 +44,7 @@ https://protobuf.dev/installation/
 - Make:
 https://www.gnu.org/software/make/#download
 
-## Quick Start:
+## Quick Start
 To quickly explore the project, you only need to build and run the docker compose image.
 
 This can be achieved by running the following in `./services/`:
@@ -155,7 +155,7 @@ make test-coverage         # Run tests with coverage report
 ```
 
 
-# Demo:
+# Demo
 Recommended flow to show case all features would be:
 1. Start the project:
 ```bash
@@ -199,7 +199,7 @@ cd ./services/test
 make test-system
 ```
 
-# Future improvements:
+# Future improvements
 - Handle configurations properly.
 - Create CI/CD Pipeline script.
   - Enforce code quality checks before being able to commit the code. (fmt and lint)

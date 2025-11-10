@@ -103,3 +103,6 @@ help:
 	@echo "make up                        # start all services and dbs"
 	@echo "make down                      # stop all services and dbs"
 	@echo "make logs                      # shows logs from services and dbs"
+
+# Default target
+.DEFAULT_GOAL := help
