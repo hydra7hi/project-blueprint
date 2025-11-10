@@ -36,9 +36,14 @@ make test-coverage
 
 - Manual test
 ```bash
-make script-create               # create user
-make script-get ARGS="1"         # get user with id
+make script-create               # create test user
+make script-create ARGS="test"   # create user with specific name
+make script-get                  # get user
+make script-get ARGS="1"         # get user with specific id
 make script-list                 # list users
-make script-update ARGS="1"      # update user with id
-make script-delete ARGS="1"      # delete user with id
+make script-list ARGS="1 2"      # list users with page number and limit
+make script-update               # update user
+make script-update ARGS="1"      # update user with specific id
+make script-delete               # delete user
+make script-delete ARGS="1"      # delete user with specific id
 ```

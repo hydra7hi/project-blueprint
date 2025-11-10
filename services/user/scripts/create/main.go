@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"grpc-services/user/client"
 	pb "grpc-services/user/proto"
@@ -12,6 +13,17 @@ import (
 )
 
 func main() {
+	// Check for args or default
+	if len(os.Args) > 2 {
+		fmt.Println("Usage: go run main.go <user_name>")
+		os.Exit(1)
+	}
+
+	userName := "Test"
+	if len(os.Args) > 1 {
+		userName = os.Args[1]
+	}
+
 	ctx := context.Background()
 
 	// Use the new GRPCClient
@@ -23,8 +35,8 @@ func main() {
 
 	// Use the client
 	resp, err := gClient.Client.CreateUser(ctx, &pb.CreateUserRequest{
-		Name:  "Test User",
-		Email: "test@example.com",
+		Name:  userName,
+		Email: userName + "@example.com",
 		Age:   30,
 	})
 
