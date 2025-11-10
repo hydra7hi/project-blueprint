@@ -1,3 +1,5 @@
+###### Templates
+## Service
 x-service-template: &service_template
   build:
     context: .
@@ -20,6 +22,7 @@ x-service-template: &service_template
   networks:
     - app-network
 
+## DB
 x-db-template: &db_template
   image: postgres:13-alpine
   env_file:
@@ -35,8 +38,10 @@ x-db-template: &db_template
     timeout: 5s
     retries: 5
 
-##### USER
-# DB
+###### Deployments
+
+#### USER
+## DB
 services:
   user-db:
     <<: *db_template
@@ -46,7 +51,7 @@ services:
     ports:
       - "5433:5432"
 
-# Service
+## Service
   user-service:
     <<: *service_template
     container_name: user-service
@@ -56,8 +61,8 @@ services:
       user-db:
         condition: service_healthy
 
-##### OPERATION
-# DB
+#### OPERATION
+## DB
   operation-db:
     <<: *db_template
     container_name: operation-db
@@ -66,7 +71,7 @@ services:
     ports:
       - "5434:5432"
 
-# Service
+## Service
   operation-service:
     <<: *service_template
     container_name: operation-service
